@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>git clone speed up</title>
+    <url>/2019/11/15/git-clone-speed-up/</url>
+    <content><![CDATA[<p><a href="https://blog.51cto.com/11887934/2051323" target="_blank" rel="noopener">原文链接</a></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>GitHUB是开源世界的一扇大门，伟大的墙对GitHub网开一面，没有像对Googl那样直接斩尽杀绝，但是对它做了严格的限速。<br>git clone（有些地区较快，有些地区较慢）；但总体来说,基本都在10KiB/s-40KiB/s之间。<br>作为linux运维人员来讲，经常需要在服务器上git clone；分享给大家个加速小办法，亲测有效！</p>
+<a id="more"></a>
+<h3 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h3><p>修改host文件，添加以下内容</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">151.101.72.249 github.global.ssl.fastly.net  </span><br><span class="line">192.30.253.112 github.com</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2019/10/24/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>初识MongoDb</title>
+    <url>/2019/10/23/mongodb-in-php/</url>
+    <content><![CDATA[<blockquote>
+<p>MongoDB 是一个基于分布式文件存储的数据库,介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。php进行mongodb查询时，有的类型需要进行转化，比如ObjectID等。</p>
+</blockquote>
+<p><a href="https://www.php.net/manual/zh/book.bson.php" target="_blank" rel="noopener">php官方文档</a></p>
+<h4 id="ObjectId"><a href="#ObjectId" class="headerlink" title="ObjectId"></a>ObjectId</h4><p>ObjectId 类似唯一主键，可以很快等去生成和排序，包含 12 bytes，含义是：</p>
+<ul>
+<li>前 4 个字节表示创建 unix 时间戳,格林尼治时间 UTC 时间，比北京时间晚了 8 个小时</li>
+<li>接下来的 3 个字节是机器标识码</li>
+<li>紧接的 2 个字节由进程 id 组成 PID</li>
+<li>最后 3 个字节是随机数</li>
+</ul>
+<p>MongoDB 中存储的文档必须有一个 <code>_id</code> 键。这个键的值可以是任何类型的，默认是个 ObjectId 对象。<br>由于 ObjectId 中保存了创建的时间戳，所以你<strong>不需要</strong>为你的文档<strong>保存时间戳</strong>字段，你可以通过 getTimestamp 函数来获取文档的创建时间</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//转换成mongodb的objectid</span></span><br><span class="line">$id = <span class="keyword">new</span> MongoDB\BSON\ObjectId($id);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<h4 id="时间戳"><a href="#时间戳" class="headerlink" title="时间戳"></a>时间戳</h4><p>BSON 有一个特殊的时间戳类型用于 MongoDB 内部使用，与普通的 日期 类型不相关。 时间戳值是一个 64 位的值。其中：</p>
+<ul>
+<li>前32位是一个 time_t 值（与Unix新纪元相差的秒数）</li>
+<li>后32位是在某秒中操作的一个递增的序数</li>
+</ul>
+<p>在单个 mongod 实例中，时间戳值通常是唯一的。<br>在复制集中， oplog 有一个 ts 字段。这个字段中的值使用BSON时间戳表示了操作时间。</p>
+<blockquote>
+<p>BSON 时间戳类型主要用于 MongoDB 内部使用。在大多数情况下的应用开发中，你可以使用 BSON 日期类型。</p>
+</blockquote>
+<h4 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h4><p>表示当前距离 Unix新纪元（1970年1月1日）的毫秒数。日期类型是有符号的, 负数表示 1970 年之前的日期。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">var_dump(<span class="keyword">new</span> MongoDB\BSON\UTCDateTime(<span class="keyword">new</span> DateTime));</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">object(MongoDB\BSON\UTCDateTime)<span class="comment">#1 (1) &#123;</span></span><br><span class="line">  [<span class="string">"milliseconds"</span>]=&gt;</span><br><span class="line">  string(<span class="number">13</span>) <span class="string">"1484852905560"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+        <tag>mongodb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo config</title>
+    <url>/2019/10/18/hexo-config/</url>
+    <content><![CDATA[<h4 id="点击爱心效果"><a href="#点击爱心效果" class="headerlink" title="点击爱心效果"></a>点击爱心效果</h4><blockquote>
+<p>从网上找到个cdn，不用创建js文件了. </p>
+</blockquote>
+<p>打开<code>themes/next/layout/_layout.swig</code>文件，在文件末尾添加以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script src=&quot;https://cdn.jsdelivr.net/gh/ygbhf/clicklove/clicklove.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo Menu Config(Theme Next)</title>
+    <url>/2019/10/17/Hexo-Menu-Config/</url>
+    <content><![CDATA[<p>Theme Next的菜单配置文件位于<code>themes/next/_config.yml</code>，包括三个部分，具体格式为<code>菜单名称: /链接/ || 图标</code>。</p>
+<a id="more"></a>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line"><span class="attr">  home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line"><span class="attr">  about:</span> <span class="string">/about/</span> <span class="string">||</span> <span class="string">user</span></span><br><span class="line"><span class="attr">  tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">  categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span></span><br><span class="line"><span class="attr">  archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
+<p>通过修改配置，生产的菜单，点击tags等会提示页面不存在，需要新建页面。</p>
+<h4 id="标签页面"><a href="#标签页面" class="headerlink" title="标签页面"></a>标签页面</h4><ul>
+<li>添加标签页面<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page tags</span><br></pre></td></tr></table></figure>
+该命令在<code>source</code>文件夹下生成<code>tags/index.md</code>文件，修改<code>index.md</code>，添加<code>type: tags</code>即可。<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: Tags</span><br><span class="line">date: 2019-10-17 16:09:22</span><br><span class="line">type: tags</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
+<li>设置文章标签<br>当要为文章添加标签时，在文章标题下面设置相应标签。<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: Hello World</span><br><span class="line">tags: </span><br><span class="line"> - tag1</span><br><span class="line"> - tag2</span><br><span class="line">categories: hexo</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="分类、关于页面"><a href="#分类、关于页面" class="headerlink" title="分类、关于页面"></a>分类、关于页面</h4><blockquote>
+<p>同标签页面</p>
+</blockquote>
+<p><a href="http://theme-next.iissnan.com/theme-settings.html#tags-page" target="_blank" rel="noopener">查看官方文档</a></p>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>
